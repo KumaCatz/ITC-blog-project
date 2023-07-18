@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import '../css/TextBox.css'
-import tweet from './tweet';
+import tweetModel from './tweetModel';
 
 function TextBox() {
-    const [tweets, setTweets] = useState([])
+    const [tweets, setTweets] = useState([]);
+    const [id, setId] = useState(0);
+    
     function handleGenerate() {
-        
+        const newTweet = tweetModel()
+        setTweets(...tweets, )
     }
 
     return (
