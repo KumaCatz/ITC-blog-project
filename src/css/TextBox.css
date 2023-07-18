@@ -1,0 +1,21 @@
+.container {
+    border: solid white;
+    position: relative;
+    width: 30vw;
+    height: 20vh;
+    margin: 1rem auto;
+    border-radius: 6px;
+}
+
+.container textarea {
+    background-color: inherit;
+    position: absolute;
+    color: white;
+}
+
+.container button {
+    background-color: #007BFF;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
