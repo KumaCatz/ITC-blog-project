@@ -1,20 +1,11 @@
-import { useState } from 'react';
 import '../css/TextBox.css'
-import tweetModel from './tweetModel';
 
-function TextBox() {
-    const [tweets, setTweets] = useState([]);
-    const [id, setId] = useState(0);
-    
-    function handleGenerate() {
-        const newTweet = tweetModel()
-        setTweets(...tweets, )
-    }
+function TextBox({handleGenerate, body}) {
 
     return (
         <div className='container'>
             <textarea placeholder="What you have in mind..."></textarea>
-            <button onClick='handleGenerate'>Tweet</button>
+            <button onClick={ handleGenerate }>Tweet</button>
         </div>
     )
 };
