@@ -1,28 +1,29 @@
 import './App.css';
 import { useState } from 'react';
 import tweetModel from './components/tweetModel';
-import TextBox from './components/TextBox';
-import GenerateTweet from './components/GenerateTweet';
+import CreateTweet from './components/CreateTweet';
+import TweetsList from './components/TweetsList';
 
 function App() {
-  const [tweets, setTweets] = useState([]);
+  const [body, setBody] = useState('');
   const [id, setId] = useState(0);
+  const [tweets, setTweets] = useState([]);
 
-  function handleGenerate(e) {
-    const { value } = e.target;
+  function handleChange(e) {setBody(e.target.value)}
 
-    const newTweet = tweetModel(id, 'KumaCat', value);
-    console.log(newTweet)
+  function handleGenerate() {
+    const newTweet = tweetModel(id, 'KumaCat', body);
+
     setTweets([...tweets, newTweet]);
-    setId(id++);
+    setId(id + 1);
   }
 
   return (
     <div className="App">
-      <TextBox handleGenerate={ handleGenerate } />
-      <GenerateTweet />
+      <CreateTweet handleChange={ handleChange } handleGenerate={ handleGenerate } />
+      <TweetsList tweets={ tweets } />
     </div>
-  );
+  )
 }
 
 export default App;

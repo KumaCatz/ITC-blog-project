@@ -1,8 +1,8 @@
 const tweetModel = (id, username, body) => ({
-    [id]:
-        {username: username,
-        body: body,
-        date: new Date(),}
+    id: id,
+    username: username,
+    body: body,
+    date: new Date().toString(),
 });
 
 export default tweetModel;
