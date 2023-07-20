@@ -1,42 +1,48 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import fetchTweet from './components/fetchTweet';
 import tweetModel from './components/tweetModel';
 import CreateTweet from './components/CreateTweet';
+import Loading from './components/Loading';
 import TweetsList from './components/TweetsList';
 
 function App() {
-  let storedTweets = JSON.parse(localStorage.getItem('tweets'));
-  let storedId = JSON.parse(localStorage.getItem('id'));
-  if (storedTweets == null || storedId == null) {
-    storedTweets = [];
-    storedId = 0;
-  }
   const [body, setBody] = useState('');
-  const [id, setId] = useState(storedId);
-  const [tweets, setTweets] = useState(storedTweets);
+  const [tweets, setTweets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  function handleCache() {
-    localStorage.clear()
-  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
+        const data = await response.json();
+        setTweets(data);
+        setLoading(false);
+      } catch(e) {
+        console.log(e)
+      }
+    }
+    fetchData();
+  }, [])
 
   function handleChange(e) {setBody(e.target.value)}
 
-  function handleGenerate() {
-    const newTweet = tweetModel(id, 'KumaCat', body);
+  async function handleGenerate(e) {
+    e.preventDefault();
+    if (body == '') {return}
+    setLoading(true);
+    const newTweet = await fetchTweet(tweetModel('KumaCat', body));
+    console.log(newTweet);
 
     setTweets([...tweets, newTweet]);
-    setId(id + 1);
-  }
+    setLoading(false);
 
-  useEffect(() => {
-    localStorage.setItem('tweets', JSON.stringify(tweets))
-    localStorage.setItem('id', JSON.stringify(id))
-  }, [ tweets, id ])
+  }
 
   return (
     <div className="App">
-      <button onClick={ handleCache } >clear cache</button>
       <CreateTweet handleChange={ handleChange } handleGenerate={ handleGenerate } />
+      {loading ? <Loading /> : null}
       <TweetsList tweets={ tweets } />
     </div>
   )

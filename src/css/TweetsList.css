@@ -11,4 +11,5 @@ div {
 header {
     display: flex;
     font-size: .9rem;
+    justify-content: space-between;
 }

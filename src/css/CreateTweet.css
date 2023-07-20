@@ -17,7 +17,7 @@
     resize: none;
 }
 
-.container button {
+.container input {
     background-color: #007BFF;
     position: absolute;
     bottom: 0;
