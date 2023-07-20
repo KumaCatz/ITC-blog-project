@@ -2,6 +2,13 @@ div {
     color: white
 }
 
+.tweet {
+    margin: 1em;
+    padding: 1em;
+    border: solid white 1px;
+}
+
 header {
-    display: flex
+    display: flex;
+    font-size: .9rem;
 }
