@@ -1,14 +1,15 @@
-import './App.css';
-import { useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import fetchTweet from './components/fetchTweet';
 import tweetModel from './components/tweetModel';
 import CreateTweet from './components/CreateTweet';
 import Loading from './components/Loading';
 import TweetsList from './components/TweetsList';
+import './App.css';
 
 function App() {
   const [body, setBody] = useState('');
   const [tweets, setTweets] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +26,14 @@ function App() {
     fetchData();
   }, [])
 
-  function handleChange(e) {setBody(e.target.value)}
+  function handleChange(e) {
+    setBody(e.target.value)
+    if(e.target.value.length == 140) {
+      setDisabled(true)
+    } else {
+      setDisabled(false)
+    }
+  }
 
   async function handleGenerate(e) {
     e.preventDefault();
@@ -36,12 +44,11 @@ function App() {
 
     setTweets([...tweets, newTweet]);
     setLoading(false);
-
   }
 
   return (
     <div className="App">
-      <CreateTweet handleChange={ handleChange } handleGenerate={ handleGenerate } />
+      <CreateTweet handleChange={ handleChange } disabled={ disabled } handleGenerate={ handleGenerate } />
       {loading ? <Loading /> : null}
       <TweetsList tweets={ tweets } />
     </div>
