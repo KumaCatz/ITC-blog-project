@@ -1,3 +1,26 @@
-.Home {
+.container {
+    border: solid white;
+    position: relative;
+    width: 30vw;
+    height: 20vh;
+    margin: 1rem auto;
+    border-radius: 6px;
+}
 
+.container textarea {
+    background-color: inherit;
+    position: absolute;
+    color: white;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border: none;
+    resize: none;
+}
+
+.container input {
+    background-color: #007BFF;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
 }

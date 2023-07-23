@@ -1,12 +1,23 @@
-import '../css/CreateTweet.css'
+import FormData from './FormData';
 
-function CreateTweet({ handleChange, handleGenerate, disabled }) {
+// import '../css/CreateTweet.css'
+
+function CreateTweet() {
+    const { disabled, tweetData, handleChange, handleSubmit } = FormData();
 
     return (
-        <form>
+        <form name='tweet'
+        onSubmit={ handleSubmit }>
             <div className='container'>
-                <textarea placeholder="What you have in mind..." maxLength={ 140 } onChange={ handleChange }></textarea>
-                <input type='submit' value='Tweet' disabled={ disabled } onClick={ handleGenerate } />
+                <textarea placeholder="What you have in mind..."
+                name='body'
+                value={ tweetData.body }
+                maxLength={ 140 }
+                onChange={ handleChange }>
+                </textarea>
+                <input type='submit'
+                value='Tweet'
+                disabled={ disabled }/>
             </div>
         </form>
     )
