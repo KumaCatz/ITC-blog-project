@@ -7,7 +7,7 @@ function TweetsList() {
     const tweets = FormData();
     useEffect(() => {
     console.log('hi')    })
-    console.log('hi')
+    console.log(tweets)
 
     // const tweetList = tweets.map(tweet =>
     //     <div key={ tweet.id } className='tweet'>
@@ -22,17 +22,7 @@ function TweetsList() {
     // return <div>{ tweetList }</div>;
 
     return (
-        <>
-            {tweets.map(tweet =>
-        <div key={ tweet.id } className='tweet'>
-            <header>
-                <div>{ tweet.username }</div>
-                <div>{ tweet.date }</div>
-            </header>
-            <div>{ tweet.body }</div>
-        </div>
-    ).reverse()}
-        </>
+        <div>list</div>
     )
 }
 
