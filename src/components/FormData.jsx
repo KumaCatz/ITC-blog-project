@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import fetchTweet from "./fetchTweet";
 
 const FormData = () => {
@@ -36,20 +36,6 @@ const FormData = () => {
         setTweets([...tweets, newTweet]);
         setLoading(false);
     }
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
-                //remind myself to delete the key afterwards
-                const data = await response.json();
-                setTweets(data);
-                setLoading(false);
-            } catch(e) {
-                console.log(e)
-            }};
-        fetchData();
-    }, [])
 
     return {
         tweets,
