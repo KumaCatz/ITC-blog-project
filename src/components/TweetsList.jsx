@@ -1,29 +1,16 @@
-import { useEffect } from 'react';
+import { useState, useContext } from 'react';
 import FormData from './FormData';
 
-import '../css/TweetsList.css'
+import '../css/TweetsList.css';
+
+import { TweetsListContext } from '../App';
 
 function TweetsList() {
-    const { tweets, setTweets, setLoading } = FormData();
+    const tweetsList = useContext(TweetsListContext);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
-                //remind myself to delete the key afterwards
-                const data = await response.json();
-                console.log(data)
-                setTweets(data);
-                setLoading(false);
-            } catch(e) {
-                console.log(e)
-            }};
-        fetchData();
-    }, [setTweets, setLoading])
+    if (tweetsList.length == 0) return;
 
-    if (tweets.length == 0) return;
-
-    const tweetList = tweets.map(tweet =>
+    const updatedTweetsList = tweetsList.map(tweet =>
         <div key={ tweet.id } className='tweet'>
             <header>
                 <div>{ tweet.username }</div>
@@ -33,7 +20,7 @@ function TweetsList() {
         </div>
     ).reverse();
 
-    return <div>{ tweetList }</div>;
+    return <div>{ updatedTweetsList }</div>;
 }
 
 export default TweetsList
