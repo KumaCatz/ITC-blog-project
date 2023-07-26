@@ -7,12 +7,12 @@ import TweetsList from './TweetsList';
 
 import '../css/Home.css'
 
-const Home = () => {
+const Home = (props) => {
     const loading = FormData();
 
     return (
         <div className="Home">
-            <CreateTweet />
+            <CreateTweet {...props} />
             {loading ? <Loading /> : null}
             <TweetsList />
         </div>

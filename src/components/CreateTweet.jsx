@@ -1,9 +1,7 @@
-import FormData from './FormData';
 
 // import '../css/CreateTweet.css'
 
-function CreateTweet() {
-    const { disabled, tweetData, handleChange, handleSubmit } = FormData();
+function CreateTweet({ tweetForm, disabled, handleSubmit, handleChange }) {
 
     return (
         <form name='tweet'
@@ -11,7 +9,7 @@ function CreateTweet() {
             <div className='container'>
                 <textarea placeholder="What you have in mind..."
                 name='body'
-                value={ tweetData.body }
+                value={ tweetForm.body }
                 maxLength={ 140 }
                 onChange={ handleChange }>
                 </textarea>
