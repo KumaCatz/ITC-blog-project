@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { useContext, useEffect } from "react";
 import { TweetsContext } from "../App";
 
+import '../css/Navbar.css'
+
 import { useState } from "react"; //example
 
 function Navbar() {

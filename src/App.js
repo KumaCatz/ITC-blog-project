@@ -1,7 +1,6 @@
 import { React, useEffect, useState, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Layout from './components/Layout';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import fetchTweet from './components/fetchTweet';
@@ -25,12 +24,19 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-          const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
-          //remind myself to delete the key afterwards
-          const data = await response.json();
-          setNumberOfTweets(data.length);
-          setTweetsList(data);
-          setLoading(false);
+        const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
+        url.searchParams.append('completed', false);
+        url.searchParams.append('page', 1);
+        url.searchParams.append('limit', 10);
+        const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet', {
+          method: 'GET',
+          headers: {'content-type':'application/json'}
+        });
+        //remind myself to delete the key afterwards
+        const data = await response.json();
+        setNumberOfTweets(data.length);
+        setTweetsList(data);
+        setLoading(false);
       } catch(e) {
           console.log(e)
       }};
@@ -91,10 +97,8 @@ function App() {
         handleChange}}>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='profile' element={<Profile />} />
-          </Route>
+          <Route index element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </TweetsContext.Provider>
   )

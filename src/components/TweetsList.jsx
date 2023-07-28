@@ -8,7 +8,7 @@ function TweetsList() {
 
     if (tweetsList.length == 0) return;
 
-    const updatedTweetsList = tweetsList.map(tweet =>
+    const renderedTweetsList = tweetsList.map(tweet =>
         <div key={ tweet.id } className='tweet'>
             <header>
                 <div>{ tweet.username }</div>
@@ -18,7 +18,7 @@ function TweetsList() {
         </div>
     ).reverse();
 
-    return <div>{ updatedTweetsList }</div>;
+    return <div>{ renderedTweetsList }</div>;
 }
 
 export default TweetsList
