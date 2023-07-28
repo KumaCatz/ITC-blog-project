@@ -4,7 +4,7 @@ import { TweetsContext } from "../App";
 // import '../css/CreateTweet.css'
 
 function CreateTweet() {
-    const {handleSubmit, tweetForm, handleChange, disabled} = useContext(TweetsContext);
+    const {handleSubmit, handleChange, disabled} = useContext(TweetsContext);
 
     return (
         <form name='tweet'
@@ -12,7 +12,6 @@ function CreateTweet() {
             <div className='container'>
                 <textarea placeholder="What you have in mind..."
                 name='body'
-                value={ tweetForm.body }
                 maxLength={ 140 }
                 onChange={ handleChange }>
                 </textarea>

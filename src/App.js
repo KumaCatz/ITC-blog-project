@@ -13,12 +13,12 @@ export const TweetsContext = createContext(null);
 function App() {
   const [loading, setLoading] = useState(true);
   const [tweetsList, setTweetsList] = useState([]);
-  const initialForm = {
-    username: 'KumaCat',
+  const [username, setUsername] = useState('KumaCat');
+  const [formData, setFormData] = useState ({
+    username: username || '',
     body: '',
     date: new Date().toISOString(),
-  };
-  const [tweetForm, setTweetForm] = useState(initialForm);
+  });
   const [disabled, setDisabled] = useState(false);
   const [numberOfTweets, setNumberOfTweets] = useState();
 
@@ -42,13 +42,21 @@ function App() {
     const {name} = e.target;
 
     if (name == 'tweet') {
-      if (tweetForm.body == '') {return}
-      setLoading(true);
-      const newTweet = await fetchTweet(tweetForm);
-      setNumberOfTweets(newTweet.id);
+      if (formData.body == '') {return}
 
+      setLoading(true);
+      const newTweet = await fetchTweet(formData);
+      setNumberOfTweets(newTweet.id);
       setTweetsList([...tweetsList, newTweet]);
       setLoading(false);
+    }
+    if (name == 'username') {
+      setFormData((pre) => {
+        return {
+          ...pre,
+          [name]: username
+        }
+      })
     }
   }
 
@@ -56,25 +64,29 @@ function App() {
     const {name, value} = e.target;
 
     if (name == 'body') {
+      setFormData((pre) => {
+        return {
+          ...pre,
+          [name]: value
+        }
+      })
       if (value.length == 140) {
         setDisabled(true)
       } else {
         setDisabled(false)
-      }
-    } else {
-      setTweetForm({
-        ...tweetForm,
-        [name]: value,
-      })
+      }  
+    }
+    if (name == 'username') {
+      setUsername(value);
     }
   }
 
   return (
       <TweetsContext.Provider value={{tweetsList,
-        tweetForm,
         disabled,
         loading,
         numberOfTweets,
+        formData,
         handleSubmit,
         handleChange}}>
         <Navbar />
@@ -88,4 +100,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

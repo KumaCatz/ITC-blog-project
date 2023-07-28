@@ -1,5 +1,8 @@
+import { useContext } from "react";
+import { TweetsContext } from "../App";
 
-function Profile({ handleChange, handleSubmit, tweetForm }) {
+function Profile() {
+    const {handleSubmit, handleChange, formData} = useContext(TweetsContext);
 
     return (
         <div>
@@ -9,7 +12,7 @@ function Profile({ handleChange, handleSubmit, tweetForm }) {
             onSubmit={ handleSubmit }>
                 <input type='text'
                 name='username'
-                value={ tweetForm.username }
+                defaultValue={ formData.username }
                 onChange={ handleChange } />
                 <button type='submit'>Save</button>
             </form>
