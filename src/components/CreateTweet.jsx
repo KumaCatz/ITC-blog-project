@@ -1,7 +1,10 @@
+import { useContext } from "react";
+import { TweetsContext } from "../App";
 
 // import '../css/CreateTweet.css'
 
-function CreateTweet({ tweetForm, disabled, handleSubmit, handleChange }) {
+function CreateTweet() {
+    const {handleSubmit, tweetForm, handleChange, disabled} = useContext(TweetsContext);
 
     return (
         <form name='tweet'

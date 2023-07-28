@@ -1,18 +1,18 @@
 import { React } from 'react';
-import FormData from './FormData';
+import { useContext } from "react";
+import { TweetsContext } from "../App";
 import CreateTweet from './CreateTweet';
 import Loading from './Loading';
 import TweetsList from './TweetsList';
-// import tweetModel from './tweetModel';
 
 import '../css/Home.css'
 
-const Home = (props) => {
-    const loading = FormData();
+const Home = () => {
+    const {loading} = useContext(TweetsContext);
 
     return (
         <div className="Home">
-            <CreateTweet {...props} />
+            <CreateTweet />
             {loading ? <Loading /> : null}
             <TweetsList />
         </div>

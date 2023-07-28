@@ -1,12 +1,10 @@
-import { useState, useContext } from 'react';
-import FormData from './FormData';
+import { useContext } from 'react';
+import { TweetsContext } from '../App';
 
 import '../css/TweetsList.css';
 
-import { TweetsListContext } from '../App';
-
 function TweetsList() {
-    const tweetsList = useContext(TweetsListContext);
+    const {tweetsList} = useContext(TweetsContext);
 
     if (tweetsList.length == 0) return;
 

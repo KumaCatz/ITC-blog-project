@@ -1,7 +1,5 @@
-import FormData from './FormData';
 
-function Profile() {
-    const { tweetData, handleChange, handleSubmit } = FormData();
+function Profile({ handleChange, handleSubmit, tweetForm }) {
 
     return (
         <div>
@@ -11,7 +9,7 @@ function Profile() {
             onSubmit={ handleSubmit }>
                 <input type='text'
                 name='username'
-                value={ tweetData.username }
+                value={ tweetForm.username }
                 onChange={ handleChange } />
                 <button type='submit'>Save</button>
             </form>
