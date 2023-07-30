@@ -1,5 +1,6 @@
-import { React, useEffect, useState, createContext } from 'react';
+import { React, useEffect, useState, createContext, useRef, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import useTweetSearch from './components/useTweetSearch';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/Profile';
@@ -10,7 +11,7 @@ import './App.css';
 export const TweetsContext = createContext(null);
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('KumaCat');
   const [formData, setFormData] = useState ({
@@ -21,18 +22,16 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [numberOfTweets, setNumberOfTweets] = useState();
 
+  const observer = useRef()
+  const [pageNumber, setPageNumber] = useState(1);
+  const { error, hasMore } = useTweetSearch(pageNumber)
+
+
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
-        const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet');
-        url.searchParams.append('completed', false);
-        url.searchParams.append('page', 1);
-        url.searchParams.append('limit', 10);
-        const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet', {
-          method: 'GET',
-          headers: {'content-type':'application/json'}
-        });
-        //remind myself to delete the key afterwards
+        const response = await fetch(url)
         const data = await response.json();
         setNumberOfTweets(data.length);
         setTweetsList(data);
@@ -51,6 +50,7 @@ function App() {
       if (formData.body == '') {return}
 
       setLoading(true);
+      setPageNumber(1);
       const newTweet = await fetchTweet(formData);
       setNumberOfTweets(newTweet.id);
       setTweetsList([...tweetsList, newTweet]);
