@@ -1,6 +1,5 @@
-import { React, useEffect, useState, createContext, useRef, useCallback } from 'react';
+import { React, useState, useEffect, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import useTweetSearch from './components/useTweetSearch';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/Profile';
@@ -11,6 +10,7 @@ import './App.css';
 export const TweetsContext = createContext(null);
 
 function App() {
+  const url = 'https://64b90fb679b7c9def6c0853b.mockapi.io/tweet'//
   const [loading, setLoading] = useState(false);
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('KumaCat');
@@ -21,11 +21,6 @@ function App() {
   });
   const [disabled, setDisabled] = useState(false);
   const [numberOfTweets, setNumberOfTweets] = useState();
-
-  const observer = useRef()
-  const [pageNumber, setPageNumber] = useState(1);
-  const { error, hasMore } = useTweetSearch(pageNumber)
-
 
   useEffect(() => {
     async function fetchData() {
@@ -42,6 +37,7 @@ function App() {
     fetchData();
   }, [setTweetsList, setLoading])
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {name} = e.target;
@@ -50,7 +46,6 @@ function App() {
       if (formData.body == '') {return}
 
       setLoading(true);
-      setPageNumber(1);
       const newTweet = await fetchTweet(formData);
       setNumberOfTweets(newTweet.id);
       setTweetsList([...tweetsList, newTweet]);

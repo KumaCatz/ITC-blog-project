@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 export default function useTweetSearch(pageNumber) {
+    const url = 'https://64b90fb679b7c9def6c0853b.mockapi.io/tweet'
+
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [tweetsList, setTweetsList] = useState([])
