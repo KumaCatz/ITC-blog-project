@@ -65,11 +65,10 @@ function App() {
   }, [pageNumber])
 
   useEffect(() => {
-    const isUser = JSON.stringify(localStorage.getItem('isUser'))
-    if (isUser) {
-      setIsUser(isUser)
+    if (localStorage.length != 0) {
+      const isUser = localStorage.getItem('isUser')
+      setIsUser(isUser)  
     }
-    console.log(isUser)
   }, [isUser])
 
   const handleSubmit = async (e) => {

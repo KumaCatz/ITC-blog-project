@@ -5,7 +5,7 @@ function Authentication({isUser, setIsUser}) {
 
   function userValidation() {
     setIsUser(true)
-    localStorage.setItem('isUser', JSON.stringify(isUser));
+    localStorage.setItem('isUser', true);
   }
 
 
