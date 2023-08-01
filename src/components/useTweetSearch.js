@@ -24,7 +24,6 @@ export default function useTweetSearch(pageNumber) {
             })
             setHasMore(res.data > 0)
             setLoading(false)
-            console.log(res.data)
         }).catch(e => {
             if (axios.isCancel(e)) return
             setError(true)
@@ -33,3 +32,5 @@ export default function useTweetSearch(pageNumber) {
     }, [pageNumber])
     return { loading, error, tweetsList, hasMore }
 }
+
+//dont need this now honestly

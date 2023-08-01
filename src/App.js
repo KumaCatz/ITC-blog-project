@@ -4,39 +4,53 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import fetchTweet from './components/fetchTweet';
+import dateContext from './contexts/dateContext';
 
 import './App.css';
 
 export const TweetsContext = createContext(null);
 
 function App() {
-  const url = 'https://64b90fb679b7c9def6c0853b.mockapi.io/tweet'//
   const [loading, setLoading] = useState(false);
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('KumaCat');
+  const [disabled, setDisabled] = useState(false);
+  const [numberOfTweets, setNumberOfTweets] = useState();
+  const [pageNumber, setPageNumber] = useState(1)
+  const [hasMore, setHasMore] = useState(false)
   const [formData, setFormData] = useState ({
     username: username || '',
     body: '',
-    date: new Date().toISOString(),
+    date: '',
   });
-  const [disabled, setDisabled] = useState(false);
-  const [numberOfTweets, setNumberOfTweets] = useState();
+
+  const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet')
+  url.searchParams.append('sortBy', 'date');
+  url.searchParams.append('order', 'desc');
+  url.searchParams.append('completed', false);
+  url.searchParams.append('page', pageNumber);
+  url.searchParams.append('limit', 10);
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
+    (async () => {
+      setLoading(true)
       try {
-        const response = await fetch(url)
-        const data = await response.json();
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {'content-type':'application/json'},
+        })
+        const data = await response.json()
         setNumberOfTweets(data.length);
-        setTweetsList(data);
+        setTweetsList(prevTweets => {
+            return [...prevTweets, ...data]
+          });
+        setHasMore(data.length > 0)
         setLoading(false);
-      } catch(e) {
-          console.log(e)
-      }};
-    fetchData();
-  }, [setTweetsList, setLoading])
-
+      } catch(error) {
+        console.log(error)
+      }  
+    })()
+  }, [pageNumber])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +59,11 @@ function App() {
     if (name == 'tweet') {
       if (formData.body == '') {return}
 
+      console.log(formData)
       setLoading(true);
       const newTweet = await fetchTweet(formData);
       setNumberOfTweets(newTweet.id);
-      setTweetsList([...tweetsList, newTweet]);
+      setTweetsList([newTweet, ...tweetsList]);
       setLoading(false);
     }
     if (name == 'username') {
@@ -68,7 +83,8 @@ function App() {
       setFormData((pre) => {
         return {
           ...pre,
-          [name]: value
+          [name]: value,
+          date: dateContext(),
         }
       })
       if (value.length == 140) {
@@ -88,6 +104,9 @@ function App() {
         loading,
         numberOfTweets,
         formData,
+        pageNumber,
+        hasMore,
+        setPageNumber,
         handleSubmit,
         handleChange}}>
         <Navbar />
