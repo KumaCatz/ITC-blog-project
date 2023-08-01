@@ -26,7 +26,7 @@ function TweetsList() {
       {loading ? <Loading /> : null}
       {tweetsList.map((tweet, index) => {
         if (index == tweetsList.length - 1) {
-            return <div ref={ lastTweetElementRef } key={ tweet.id } className='tweet'>
+            return <div ref={ lastTweetElementRef } key={ index } className='tweet'>
               <header>
                 <div>{ tweet.username }</div>
                 <div>{ tweet.date }</div>
@@ -35,7 +35,7 @@ function TweetsList() {
             </div>
         } else {
         return (
-          <div key={ tweet.id } className='tweet'>
+          <div key={ index } className='tweet'>
           <header>
             <div>{ tweet.username }</div>
             <div>{ tweet.date }</div>

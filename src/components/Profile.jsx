@@ -13,7 +13,8 @@ function Profile() {
                 <input type='text'
                 name='username'
                 defaultValue={ formData.username }
-                onChange={ handleChange } />
+                onChange={ handleChange }
+                className="text-black" />
                 <button type='submit'>Save</button>
             </form>
         </div>

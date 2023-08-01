@@ -1,35 +1,16 @@
 import { Link } from 'react-router-dom';
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { TweetsContext } from "../App";
-
-import '../css/Navbar.css'
-
-// import { useState } from "react"; //example
 
 function Navbar() {
     const {numberOfTweets} = useContext(TweetsContext);
 
-    // const [time, setTime] = useState(0) //also example
-    // useEffect(() => {
-    //     const intervalID = setInterval(() => {
-    //         setTime((par) => par + 1)
-    //     }, 1000);
-
-    //     return () => {
-    //         clearInterval(intervalID);
-    //     }
-    // }, [])
-
     return (
-        <nav>
-            <ul>
-                <li><Link to='/'>Home</Link></li>
-                <li><Link to='/profile'>Profile</Link></li>
-                <li>Tweets published so far: {numberOfTweets}</li>
-                {/* <li>seconds passed: {time}</li> */}
-            </ul>
-        </nav>
-
+      <div className='flex flex-row justify-around my-6'>
+            <Link to='/home'><button className='rounded-sm bg-teal-800 w-64'>Home</button></Link>
+            <Link to='/profile'><button className='rounded-sm bg-teal-800 w-64'>Profile</button></Link>
+            <div className='rounded-sm bg-sky-700 w-64 text-center'>Tweets published so far: {numberOfTweets}</div>
+      </div>
     )
 }
 export default Navbar

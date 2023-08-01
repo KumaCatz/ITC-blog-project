@@ -1,6 +1,7 @@
 import { React, useState, useEffect, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Authentication from './components/Authentication';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import fetchTweet from './components/fetchTweet';
@@ -11,6 +12,9 @@ import './App.css';
 export const TweetsContext = createContext(null);
 
 function App() {
+  console.log(localStorage)
+  const [isUser, setIsUser] = useState(false)
+  console.log(isUser)
   const [loading, setLoading] = useState(false);
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('KumaCat');
@@ -59,6 +63,14 @@ function App() {
       }  
     })()
   }, [pageNumber])
+
+  useEffect(() => {
+    const isUser = JSON.stringify(localStorage.getItem('isUser'))
+    if (isUser) {
+      setIsUser(isUser)
+    }
+    console.log(isUser)
+  }, [isUser])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,9 +129,13 @@ function App() {
         setPageNumber,
         handleSubmit,
         handleChange}}>
-        <Navbar />
+        {isUser ? <Navbar /> : null}
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Authentication
+            isUser= {isUser}
+            setIsUser={setIsUser} />}
+          />
+          <Route path='/Home' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
       </TweetsContext.Provider>
