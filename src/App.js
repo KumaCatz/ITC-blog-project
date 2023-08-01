@@ -32,6 +32,15 @@ function App() {
   url.searchParams.append('limit', 10);
 
   useEffect(() => {
+    async function firstTweet() {
+      const response = await fetch(url)
+      const data = await response.json()
+      if (data != '') {setNumberOfTweets(data[0].id)}
+    }
+    firstTweet()
+  }, [])
+
+  useEffect(() => {
     (async () => {
       setLoading(true)
       try {
@@ -40,12 +49,11 @@ function App() {
           headers: {'content-type':'application/json'},
         })
         const data = await response.json()
-        setNumberOfTweets(data.length);
         setTweetsList(prevTweets => {
             return [...prevTweets, ...data]
           });
+        setLoading(false)
         setHasMore(data.length > 0)
-        setLoading(false);
       } catch(error) {
         console.log(error)
       }  

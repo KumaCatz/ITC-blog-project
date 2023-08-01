@@ -1,11 +1,11 @@
-import { React, useState, useContext, useRef, useCallback } from 'react';
+import { React, useContext, useRef, useCallback } from 'react';
 import { TweetsContext } from '../App';
 import Loading from './Loading';
 
 import '../css/TweetsList.css';
 
 function TweetsList() {
-  const { tweetsList, loading, hasMore, pageNumber, setPageNumber } = useContext(TweetsContext);
+  const { tweetsList, loading, hasMore, setPageNumber } = useContext(TweetsContext);
 
   const observer = useRef()
   const lastTweetElementRef = useCallback(node => {
@@ -45,6 +45,7 @@ function TweetsList() {
         )
         }
       })}
+      {loading ? <Loading /> : null}
     </>
   )
 }
