@@ -1,5 +1,5 @@
 import { React, useState, useEffect, createContext } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Authentication from './components/Authentication';
 import Home from './components/Home';
@@ -69,6 +69,12 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (isUser == true && 1 == 1) {
+      console.log('hi')
+    }
+  }, [isUser])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {name} = e.target;
@@ -127,11 +133,13 @@ function App() {
         handleChange}}>
         {isUser ? <Navbar /> : null}
         <Routes>
-          <Route index element={<Authentication
+          {isUser ? <Route index element={<Navigate to='/home' />} replace={true} />
+            : <Route index element={<Authentication
             isUser= {isUser}
             setIsUser={setIsUser} />}
-          />
-          <Route path='/Home' element={<Home />} />
+            />
+          }
+          <Route path='/home' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
       </TweetsContext.Provider>
