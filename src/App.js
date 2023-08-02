@@ -12,10 +12,8 @@ import './App.css';
 export const TweetsContext = createContext(null);
 
 function App() {
-  console.log(localStorage)
   const [isUser, setIsUser] = useState(false)
-  console.log(isUser)
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('KumaCat');
   const [disabled, setDisabled] = useState(false);
@@ -42,7 +40,7 @@ function App() {
       if (data != '') {setNumberOfTweets(data[0].id)}
     }
     firstTweet()
-  }, [])
+  }, [tweetsList])
 
   useEffect(() => {
     (async () => {
@@ -69,7 +67,7 @@ function App() {
       const isUser = localStorage.getItem('isUser')
       setIsUser(isUser)  
     }
-  }, [isUser])
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,14 +76,13 @@ function App() {
     if (name == 'tweet') {
       if (formData.body == '') {return}
 
-      console.log(formData)
       setLoading(true);
       const newTweet = await fetchTweet(formData);
       setNumberOfTweets(newTweet.id);
       setTweetsList([newTweet, ...tweetsList]);
       setLoading(false);
     }
-    if (name == 'username') {
+    if (name == 'change-username') {
       setFormData((pre) => {
         return {
           ...pre,
@@ -112,7 +109,7 @@ function App() {
         setDisabled(false)
       }  
     }
-    if (name == 'username') {
+    if (name == 'change-username') {
       setUsername(value);
     }
   }

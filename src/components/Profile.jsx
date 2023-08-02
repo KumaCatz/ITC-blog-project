@@ -8,10 +8,10 @@ function Profile() {
         <div>
             <h1>Profile</h1>
             <h2>User Name</h2>
-            <form name='username'
+            <form name='change-username'
             onSubmit={ handleSubmit }>
                 <input type='text'
-                name='username'
+                name='change-username'
                 defaultValue={ formData.username }
                 onChange={ handleChange }
                 className="text-black" />

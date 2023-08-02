@@ -1,19 +1,22 @@
-import { useEffect } from "react"
+import { useState } from "react";
 
-
-function Authentication({isUser, setIsUser}) {
+function Authentication({setIsUser}) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   function userValidation() {
     setIsUser(true)
     localStorage.setItem('isUser', true);
   }
 
-
   return (
     <>
-      <div>hi</div>
+    <form>
+      <input type='text' placeholder='username' name='username' onChange={ () => setUsername(e.target.value) } />
+      <input type='text' placeholder='password' />
       <button onClick={userValidation} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">enter</button>
-      <button onClick={() => localStorage.clear()}>clear cache</button>
+    </form>
+    <button onClick={() => localStorage.clear()}>clear cache</button>
     </>
   )
 }
