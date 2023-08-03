@@ -1,13 +1,16 @@
 import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Authentication({setIsUser}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   function userValidation(e) {
     e.preventDefault()
     setIsUser(true)
     localStorage.setItem('isUser', true);
+    navigate('/home')
   }
 
   return (

@@ -17,7 +17,6 @@ function CreateTweet() {
                 value='Tweet'
                 disabled={ disabled }/>
             </div>
-            <button onClick={() => localStorage.clear()}>exit</button>
         </form>
     )
 };

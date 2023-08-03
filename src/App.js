@@ -1,9 +1,10 @@
 import { React, useState, useEffect, createContext } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Authentication from './components/Authentication';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import NoMatch from './components/NoMatch';
 import fetchTweet from './components/fetchTweet';
 import dateContext from './contexts/dateContext';
 
@@ -69,12 +70,6 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    if (isUser == true && 1 == 1) {
-      console.log('hi')
-    }
-  }, [isUser])
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {name} = e.target;
@@ -128,19 +123,18 @@ function App() {
         formData,
         pageNumber,
         hasMore,
+        setIsUser,
         setPageNumber,
         handleSubmit,
         handleChange}}>
         {isUser ? <Navbar /> : null}
         <Routes>
-          {isUser ? <Route index element={<Navigate to='/home' />} replace={true} />
-            : <Route index element={<Authentication
-            isUser= {isUser}
-            setIsUser={setIsUser} />}
-            />
-          }
-          <Route path='/home' element={<Home />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route index element={<Authentication
+          isUser= {isUser}
+          setIsUser={setIsUser} />} />
+          {isUser ? <Route path='/home' element={<Home />} /> : null }
+          {isUser ? <Route path='/profile' element={<Profile />} /> : null }
+          <Route path='*' element={<NoMatch />} />
         </Routes>
       </TweetsContext.Provider>
   )
