@@ -26,6 +26,11 @@ function App() {
     body: '',
     date: '',
   });
+  const [userData, setUserData] = useState({
+    id: '',
+    username: '',
+    password: '',
+  })
 
   const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet')
   url.searchParams.append('sortBy', 'date');
