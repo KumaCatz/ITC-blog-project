@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Authentication from './components/Authentication';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import NoMatch from './components/NoMatch';
-import fetchTweet from './components/fetchTweet';
+import postData from './components/postData';
 import date from './data/date';
 
 import './App.css';
@@ -16,7 +16,7 @@ function App() {
   const [isUser, setIsUser] = useState(false)
   const [loading, setLoading] = useState(false)
   const [tweetsList, setTweetsList] = useState([]);
-  const [username, setUsername] = useState('KumaCat');
+  const [username, setUsername] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [numberOfTweets, setNumberOfTweets] = useState();
   const [pageNumber, setPageNumber] = useState(1)
@@ -31,6 +31,8 @@ function App() {
     username: '',
     password: '',
   })
+
+  const navigate = useNavigate()
 
   const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet')
   url.searchParams.append('sortBy', 'date');
@@ -83,7 +85,7 @@ function App() {
       if (formData.body == '') {return}
 
       setLoading(true);
-      const newTweet = await fetchTweet(formData);
+      const newTweet = await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet', formData);
       setNumberOfTweets(newTweet.id);
       setTweetsList([newTweet, ...tweetsList]);
       setLoading(false);
@@ -92,7 +94,22 @@ function App() {
       setFormData((pre) => {
         return {
           ...pre,
-          [name]: username
+          'username': username
+        }
+      })
+      console.log(formData)
+    }
+    if (name == 'register-user') {
+      if (userData.password == '' || userData.username == '') {return}
+      console.log(userData)
+      const newUser = await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/user', userData);
+      setIsUser(true)
+      localStorage.setItem('isUser', true);
+      navigate('/home')
+      setFormData((pre) => {
+        return {
+          ...pre,
+          'username': userData.username
         }
       })
     }
@@ -118,6 +135,22 @@ function App() {
     if (name == 'change-username') {
       setUsername(value);
     }
+    if (name == 'register-username') {
+      setUserData((pre) => {
+        return {
+          ...pre,
+          'username': value
+        }
+      })
+    }
+    if (name == 'register-password') {
+      setUserData((pre) => {
+        return {
+          ...pre,
+          'password': value
+        }
+      })
+    }
   }
 
   return (
@@ -128,7 +161,9 @@ function App() {
         formData,
         pageNumber,
         hasMore,
+        userData,
         setIsUser,
+        setUserData,
         setPageNumber,
         handleSubmit,
         handleChange}}>

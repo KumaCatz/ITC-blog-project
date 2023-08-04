@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "./RegisterModal";
+import RegisterModal from "./RegisterModal";
 
 function Authentication({setIsUser}) {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ function Authentication({setIsUser}) {
         <input type='text' placeholder='password' className='shadow appearance-none border rounded w-3/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
         <button onClick={userValidation} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">enter</button>
       </form>
-      <Modal />
+      <RegisterModal />
       <button onClick={() => localStorage.clear()}>clear cache</button>
     </>
   )
