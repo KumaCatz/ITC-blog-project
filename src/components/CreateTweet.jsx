@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TweetsContext } from "../App";
+import { TweetsContext } from "../contexts/TweetsContext";
 
 function CreateTweet() {
     const {handleSubmit, handleChange, disabled} = useContext(TweetsContext);

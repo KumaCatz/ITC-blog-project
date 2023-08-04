@@ -1,16 +1,16 @@
-import { React, useState, useEffect, createContext } from 'react';
-import { Routes, Route, Navigate, redirect } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Authentication from './components/Authentication';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import NoMatch from './components/NoMatch';
 import fetchTweet from './components/fetchTweet';
-import dateContext from './contexts/dateContext';
+import date from './data/date';
 
 import './App.css';
 
-export const TweetsContext = createContext(null);
+import { TweetsContext } from './contexts/TweetsContext';
 
 function App() {
   const [isUser, setIsUser] = useState(false)
@@ -106,7 +106,7 @@ function App() {
         return {
           ...pre,
           [name]: value,
-          date: dateContext(),
+          date: date(),
         }
       })
       if (value.length == 140) {

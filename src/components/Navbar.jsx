@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
-import { TweetsContext } from "../App";
+import { TweetsContext } from "../contexts/TweetsContext";
 
 function Navbar() {
     const {numberOfTweets} = useContext(TweetsContext);

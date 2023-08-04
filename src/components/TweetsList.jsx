@@ -1,5 +1,5 @@
 import { React, useContext, useRef, useCallback } from 'react';
-import { TweetsContext } from '../App';
+import { TweetsContext } from "../contexts/TweetsContext";
 import Loading from './Loading';
 
 import '../css/TweetsList.css';
