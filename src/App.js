@@ -5,12 +5,14 @@ import Authentication from './components/Authentication';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import NoMatch from './components/NoMatch';
+import getData from './components/getData';
 import postData from './components/postData';
+import { TweetsContext } from './contexts/TweetsContext';
+import { UserContext } from './contexts/UserContext';
 import date from './data/date';
 
 import './App.css';
 
-import { TweetsContext } from './contexts/TweetsContext';
 
 function App() {
   const [isUser, setIsUser] = useState(false)
@@ -53,20 +55,12 @@ function App() {
   useEffect(() => {
     (async () => {
       setLoading(true)
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {'content-type':'application/json'},
-        })
-        const data = await response.json()
-        setTweetsList(prevTweets => {
-            return [...prevTweets, ...data]
-          });
-        setLoading(false)
-        setHasMore(data.length > 0)
-      } catch(error) {
-        console.log(error)
-      }  
+      const data = await getData(url)
+      setTweetsList(prevTweets => {
+          return [...prevTweets, ...data]
+        });
+      setLoading(false)
+      setHasMore(data.length > 0)
     })()
   }, [pageNumber])
 
@@ -90,7 +84,7 @@ function App() {
       setTweetsList([newTweet, ...tweetsList]);
       setLoading(false);
     }
-    if (name == 'change-username') {
+    if (name == 'change-profile') {
       setFormData((pre) => {
         return {
           ...pre,
@@ -98,20 +92,6 @@ function App() {
         }
       })
       console.log(formData)
-    }
-    if (name == 'register-user') {
-      if (userData.password == '' || userData.username == '') {return}
-      console.log(userData)
-      const newUser = await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/user', userData);
-      setIsUser(true)
-      localStorage.setItem('isUser', true);
-      navigate('/home')
-      setFormData((pre) => {
-        return {
-          ...pre,
-          'username': userData.username
-        }
-      })
     }
   }
 
@@ -154,6 +134,7 @@ function App() {
   }
 
   return (
+    <UserContext.Provider value={{userData, setUserData}}>
       <TweetsContext.Provider value={{tweetsList,
         disabled,
         loading,
@@ -161,9 +142,9 @@ function App() {
         formData,
         pageNumber,
         hasMore,
-        userData,
+        username,
         setIsUser,
-        setUserData,
+        setFormData,
         setPageNumber,
         handleSubmit,
         handleChange}}>
@@ -171,12 +152,14 @@ function App() {
         <Routes>
           <Route index element={<Authentication
           isUser= {isUser}
-          setIsUser={setIsUser} />} />
+          setIsUser={setIsUser}
+          setUserData={setUserData} />} />
           {isUser ? <Route path='/home' element={<Home />} /> : null }
           {isUser ? <Route path='/profile' element={<Profile />} /> : null }
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </TweetsContext.Provider>
+    </UserContext.Provider>
   )
 }
 

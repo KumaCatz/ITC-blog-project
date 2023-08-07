@@ -6,6 +6,5 @@ export default async function postData(url, content) {
         body: JSON.stringify(content)
     })
     const data = await response.json();
-    console.log(data)
     return data;
 }

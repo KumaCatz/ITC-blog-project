@@ -8,7 +8,7 @@ function CreateTweet() {
         <form name='tweet'
         onSubmit={ handleSubmit }>
             <div className='container'>
-                <textarea placeholder="What you have in mind..."
+                <textarea placeholder="I'm thinking..."
                 name='body'
                 maxLength={ 140 }
                 onChange={ handleChange }>
