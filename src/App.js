@@ -13,6 +13,7 @@ import date from './data/date';
 
 import './App.css';
 
+// nextStep: change userData to a reducer, so I can change in the login/register and profile pages without changing setUserData and exporting manually all the time
 
 function App() {
   const [isUser, setIsUser] = useState(false)
@@ -33,8 +34,6 @@ function App() {
     username: '',
     password: '',
   })
-
-  const navigate = useNavigate()
 
   const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet')
   url.searchParams.append('sortBy', 'date');

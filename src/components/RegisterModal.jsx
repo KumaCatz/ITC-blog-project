@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { TweetsContext } from "../contexts/TweetsContext";
 import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 import postData from "./postData";
 
 import '../css/RegisterModal.css'
@@ -9,6 +10,7 @@ export default function RegisterModal() {
   const {handleChange, setIsUser, setFormData} = useContext(TweetsContext);
   const {setUserData, userData} = useContext(UserContext)
   const [showModal, setShowModal] = React.useState(false);
+  const navigate = useNavigate()
 
   function exitModal() {
     setShowModal(false)
@@ -18,7 +20,6 @@ export default function RegisterModal() {
       password: '',
     })
   }
-
   
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -34,12 +35,13 @@ export default function RegisterModal() {
       }
     })
     setShowModal(false)
+    navigate('/home')
   }
 
   return (
     <>
       <button
-        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 mt-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
