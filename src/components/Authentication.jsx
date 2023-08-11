@@ -6,7 +6,7 @@ import RegisterModal from "./RegisterModal";
 import endpoint from "../data/endpoint";
 
 function Authentication({setIsUser}) {
-  const {userData} = useContext(UserContext)
+  const {userData, setUserData} = useContext(UserContext)
   const [loginData, setLoginData] = useState({}) 
   const [loginError, setLoginError] = useState('')
   const navigate = useNavigate()
@@ -19,7 +19,11 @@ function Authentication({setIsUser}) {
       if (loginData.username == user.username && loginData.password == user.password) {
         setIsUser(true)
         localStorage.setItem('isUser', true);
-        userData = 
+        setUserData({
+          id: loginData.id,
+          username: loginData.username,
+          password: loginData.password,
+        })
         navigate('/home')
       } else {
         setLoginError('whoops, username/password error :(')

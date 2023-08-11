@@ -1,23 +1,25 @@
 import { useContext, useState } from "react";
 import { TweetsContext } from "../contexts/TweetsContext";
+import { UserContext } from "../contexts/UserContext";
 
 function Profile() {
+    const {userData, setUserData} = useContext(UserContext)
     const {setFormData, handleChange, formData, username} = useContext(TweetsContext);
     const [newPassord, setNewPassword] = useState('')
+    const [newUsername, setNewUsername] = useState('')
 
     async function updateUserData(e) {
         e.preventDefault();
 
-        setFormData((pre) => {
-            return {
-              ...pre,
-              'username': username
-            }
-          })
-          console.log(formData)
+        // setFormData((pre) => {
+        //     return {
+        //       ...pre,
+        //       'username': username
+        //     }
+        //   })
 
         const updatedUserData = {
-            'username': formData.username,
+            'username': newUsername,
             'password': newPassord,
         }
       
@@ -35,6 +37,19 @@ function Profile() {
         try {
             const response = await fetch(url, options)
             const data = await response.json()
+            setUserData((pre) => {
+                return {
+                    ...pre,
+                    username: data.username,
+                    password: data.password,
+                }
+            })
+            setFormData((pre) => {
+                return {
+                    ...pre,
+                    username:data.username,
+                }
+            })
             console.log('fetch using put method:', data)
         } catch (e) {
             console.log(e)
@@ -58,12 +73,12 @@ function Profile() {
                 <input type='text'
                 name='change-username'
                 defaultValue={ formData.username }
-                onChange={ handleChange }
+                onChange={(e) => {setNewUsername(e.target.value)}}
                 className="text-black" />
                 <div>Password</div>
-                <input type='text'
+                <input type='password'
                 name='change-password'
-                defaultValue={ formData.password }
+                defaultValue={ userData.password }
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="text-black" />
                 <div>

@@ -70,6 +70,15 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    setFormData((pre)=> {
+      return {
+        ...pre,
+        username: userData.username
+      }
+    })
+  }, [userData])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {name} = e.target;

@@ -35,6 +35,7 @@ export default function RegisterModal() {
       }
     })
     setShowModal(false)
+    setIsUser(true)
     navigate('/home')
   }
 
