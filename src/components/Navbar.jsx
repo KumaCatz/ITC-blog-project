@@ -4,22 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { TweetsContext } from "../contexts/TweetsContext";
 
 function Navbar() {
-    const {numberOfTweets, setIsUser} = useContext(TweetsContext);
-    const navigate = useNavigate()
+  const {numberOfTweets, setIsUser} = useContext(TweetsContext);
+  const navigate = useNavigate()
 
-    function handleLogout() {
-      localStorage.clear()
-      setIsUser(false)
-      navigate('..')
-    }
+  function handleLogout() {
+    localStorage.clear()
+    setIsUser(false)
+    navigate('..')
+  }
 
-    return (
-      <div className='flex flex-row justify-around my-6'>
-            <Link to='/home'><button className='rounded-sm bg-teal-800 w-64'>Home</button></Link>
-            <Link to='/profile'><button className='rounded-sm bg-teal-800 w-64'>Profile</button></Link>
-            <div className='rounded-sm bg-sky-700 w-64 text-center'>Tweets published so far: {numberOfTweets}</div>
-            <button className='rounded-sm bg-sky-700 w-64 text-center' onClick={handleLogout}>Logout</button>
-      </div>
-    )
+  return (
+    <ul className='flex flex-row justify-around my-6'>
+      <li className='mr-6'>
+        <div className='text-black'>Tweets published so far: {numberOfTweets}</div>
+      </li>
+      <li className='mr-6'>
+        <Link to='/home'><button className='text-blue-500 hover:text-blue-800'>Home</button></Link>
+      </li>
+      <li className='mr-6'>
+        <Link to='/profile'><button className='text-blue-500 hover:text-blue-800'>Profile</button></Link>
+      </li>
+      <li>
+        <button className='text-red-500 hover:text-red-800' onClick={handleLogout}>Logout</button>
+      </li>
+    </ul>
+  )
 }
 export default Navbar

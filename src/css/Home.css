@@ -10,7 +10,6 @@
 .container textarea {
     background-color: inherit;
     position: absolute;
-    color: white;
     width: calc(100% - 4px);
     height: calc(100% - 4px);
     border: none;

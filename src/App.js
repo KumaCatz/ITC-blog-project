@@ -66,7 +66,9 @@ function App() {
   useEffect(() => {
     if (localStorage.length != 0) {
       const isUser = localStorage.getItem('isUser')
-      setIsUser(isUser)  
+      setIsUser(isUser)
+      const userData = JSON.parse(localStorage.getItem('userData'))
+      setUserData(userData)
     }
   }, [])
 
