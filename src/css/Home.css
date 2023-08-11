@@ -1,5 +1,4 @@
 .container {
-    border: solid white;
     position: relative;
     width: 30vw;
     height: 20vh;
@@ -10,9 +9,8 @@
 .container textarea {
     background-color: inherit;
     position: absolute;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    border: none;
+    width: 100%;
+    height: 100%;
     resize: none;
 }
 

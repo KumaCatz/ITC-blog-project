@@ -7,11 +7,9 @@ import TweetsList from './TweetsList';
 import '../css/Home.css'
 
 const Home = () => {
-  const {userData} = useContext(UserContext)
 
   return (
     <div className="Home">
-      <div>Hey {userData.username}!</div>
       <CreateTweet />
       <TweetsList />
     </div>
