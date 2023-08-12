@@ -14,6 +14,7 @@ function Authentication({setIsUser}) {
   async function handleLogin(e) {
     e.preventDefault()
     const users = await getData(endpoint.users)
+    // console.log(users)
 
     for (const user of users) {
       if (loginData.username == user.username && loginData.password == user.password) {
@@ -44,6 +45,16 @@ function Authentication({setIsUser}) {
         }
     })
   }
+
+  useEffect(() => {
+    // console.log('before if statement')
+    // console.log('localStorage', localStorage)
+    if(localStorage.getItem('isUser') == 'true') {
+      navigate('/home')
+      // console.log('automatic-login')
+    }
+  }, [])
+
   return (
     <>
       <div className="bg-white shadow-md rounded px-8 w-1/2 pb-6 pt-4 mt-6 mx-auto flex flex-col justify-center items-center">
@@ -53,7 +64,7 @@ function Authentication({setIsUser}) {
             <input type='text' placeholder='Username' name='username' onChange={(e) => handleLoginInput(e.target.value, 'username')} className='shadow appearance-none text-center border rounded py-2 px-3 text-gray-700 leading-tight focus:placeholder-white' />
           </div>
           <div className="mb-4">
-            <input type='password' placeholder='Password' onChange={(e) => handleLoginInput(e.target.value, 'password')} className='shadow appearance-none border rounded text-center py-2 px-3 text-gray-700 leading-tight focus:placeholder-white' />
+            <input type='password' placeholder='Password' onChange={(e) => handleLoginInput(e.target.value, 'password')} className='shadow appearance-none text-center border rounded py-2 px-3 text-gray-700 leading-tight focus:placeholder-white' />
           </div>
 
           <button onClick={handleLogin} className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150">Login</button>

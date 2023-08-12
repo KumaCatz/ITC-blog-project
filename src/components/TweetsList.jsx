@@ -1,6 +1,7 @@
 import { React, useContext, useRef, useCallback } from 'react';
 import { TweetsContext } from "../contexts/TweetsContext";
-import Loading from './Loading';
+import LoadingList from './LoadingList';
+import LoadingTweet from './LoadingTweet';
 
 import '../css/TweetsList.css';
 
@@ -23,7 +24,7 @@ function TweetsList() {
 
   return (
     <div className='flex flex-col items-center space-y-4'>
-      {loading ? <Loading /> : null}
+      {loading ? <LoadingTweet /> : null}
       {tweetsList.map((tweet, index) => {
         if (index == tweetsList.length - 1) {
             return <div ref={ lastTweetElementRef } key={ index } className='bg-white p-4 rounded-lg shadow-lg w-1/2'>
@@ -45,7 +46,7 @@ function TweetsList() {
         )
         }
       })}
-      {loading ? <Loading /> : null}
+      {loading ? <LoadingList /> : null}
     </div>
   )
 }

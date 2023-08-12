@@ -12,7 +12,7 @@ function CreateTweet() {
                 name='body'
                 maxLength={ 140 }
                 onChange={ handleChange }
-                className="shadow-lg block p-2.5 w-full text-base text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                className="shadow-lg block p-2.5 w-full text-base text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                 </textarea>
                 <input type='submit'
                 value='Tweet'

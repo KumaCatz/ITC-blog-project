@@ -1,8 +1,8 @@
 import React from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import CreateTweet from './CreateTweet';
-import TweetsList from './TweetsList';
+import CreateTweet from '../components/CreateTweet';
+import TweetsList from '../components/TweetsList';
 
 import '../css/Home.css'
 

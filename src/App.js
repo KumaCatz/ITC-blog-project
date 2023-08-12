@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Authentication from './components/Authentication';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import NoMatch from './components/NoMatch';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import NoMatch from './pages/NoMatch';
 import getData from './components/getData';
 import postData from './components/postData';
 import { TweetsContext } from './contexts/TweetsContext';
@@ -12,6 +12,7 @@ import { UserContext } from './contexts/UserContext';
 import date from './data/date';
 
 import './App.css';
+
 
 // nextStep: change userData to a reducer, so I can change in the login/register and profile pages without changing setUserData and exporting manually all the time
 
@@ -49,7 +50,7 @@ function App() {
       if (data != '') {setNumberOfTweets(data[0].id)}
     }
     firstTweet()
-  }, [tweetsList])
+  }, [])
 
   useEffect(() => {
     (async () => {

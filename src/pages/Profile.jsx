@@ -58,25 +58,22 @@ function Profile() {
 
 
     return (
-        <div>
-            <h1>Profile</h1>
-            <form name='change-profile'
-            onSubmit={ updateUserData }>
-                <div>User Name</div>
+        <div className='flex flex-col items-center space-y-4'>
+            <h1 className="mt-4 mb-2 text-xl">Change Profile</h1>
+            <form name='change-profile' onSubmit={ updateUserData } className="flex flex-col space-y-4 w-1/5">
+                <div className="text-center font-medium">User Name</div>
                 <input type='text'
                 name='change-username'
                 defaultValue={ formData.username }
                 onChange={(e) => {setNewUsername(e.target.value)}}
-                className="text-black" />
-                <div>Password</div>
+                className="text-center bg-white p-4 rounded-lg shadow-lg" />
+                <div className="text-center font-medium">Password</div>
                 <input type='password'
                 name='change-password'
                 defaultValue={ userData.password }
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="text-black" />
-                <div>
-                    <button type='submit'>Save</button>
-                </div>
+                className="text-center bg-white p-4 rounded-lg shadow-lg" />
+                <button type='submit' className="m-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w w-1/2">Save</button>
             </form>
         </div>
     )
