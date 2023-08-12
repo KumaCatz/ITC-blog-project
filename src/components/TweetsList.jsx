@@ -22,22 +22,22 @@ function TweetsList() {
   if (tweetsList.length == 0) return null
 
   return (
-    <>
+    <div className='flex flex-col items-center space-y-4'>
       {loading ? <Loading /> : null}
       {tweetsList.map((tweet, index) => {
         if (index == tweetsList.length - 1) {
-            return <div ref={ lastTweetElementRef } key={ index } className='tweet'>
+            return <div ref={ lastTweetElementRef } key={ index } className='bg-white p-4 rounded-lg shadow-lg w-1/2'>
               <header>
-                <div>{ tweet.username }</div>
+                <div className='text-lg font-bold'>{ tweet.username }</div>
                 <div>{ tweet.date }</div>
               </header>
               <div>{ tweet.body }</div>
             </div>
         } else {
         return (
-          <div key={ index } className='tweet'>
+          <div key={ index } className='bg-white p-4 rounded-lg shadow-lg w-1/2'>
           <header>
-            <div>{ tweet.username }</div>
+            <div className='text-lg font-bold'>{ tweet.username }</div>
             <div>{ tweet.date }</div>
           </header>
           <div>{ tweet.body }</div>
@@ -46,7 +46,7 @@ function TweetsList() {
         }
       })}
       {loading ? <Loading /> : null}
-    </>
+    </div>
   )
 }
 

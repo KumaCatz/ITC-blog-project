@@ -11,13 +11,6 @@ function Profile() {
     async function updateUserData(e) {
         e.preventDefault();
 
-        // setFormData((pre) => {
-        //     return {
-        //       ...pre,
-        //       'username': username
-        //     }
-        //   })
-
         const updatedUserData = {
             'username': newUsername,
             'password': newPassord,
