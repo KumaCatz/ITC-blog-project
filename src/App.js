@@ -20,7 +20,7 @@ function App() {
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
-  const [numberOfTweets, setNumberOfTweets] = useState();
+  const [numberOfTweets, setNumberOfTweets] = useState(0);
   const [pageNumber, setPageNumber] = useState(1)
   const [isMore, setIsMore] = useState(false)
   const [formData, setFormData] = useState ({
