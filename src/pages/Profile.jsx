@@ -4,7 +4,7 @@ import { UserContext } from "../contexts/UserContext";
 
 function Profile() {
     const {userData, setUserData} = useContext(UserContext)
-    const {setFormData, handleChange, formData, username} = useContext(TweetsContext);
+    const {setFormData, formData} = useContext(TweetsContext);
     const [newPassord, setNewPassword] = useState('')
     const [newUsername, setNewUsername] = useState('')
 

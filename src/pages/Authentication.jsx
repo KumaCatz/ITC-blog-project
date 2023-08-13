@@ -1,20 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import getData from "./getData";
-import RegisterModal from "./RegisterModal";
+import getData from "../components/getData";
+import RegisterModal from "../components/RegisterModal";
 import endpoint from "../data/endpoint";
 
 function Authentication({setIsUser}) {
-  const {userData, setUserData} = useContext(UserContext)
+  const {setUserData} = useContext(UserContext)
   const [loginData, setLoginData] = useState({}) 
   const [loginError, setLoginError] = useState('')
   const navigate = useNavigate()
 
   async function handleLogin(e) {
     e.preventDefault()
+    const errorMsg = 'whoops, username/password error :('
     const users = await getData(endpoint.users)
-    // console.log(users)
+    console.log(users)
+    if (users.length == 0) setLoginError(errorMsg)
 
     for (const user of users) {
       if (loginData.username == user.username && loginData.password == user.password) {
@@ -32,7 +34,7 @@ function Authentication({setIsUser}) {
         }))
         navigate('/home')
       } else {
-        setLoginError('whoops, username/password error :(')
+        setLoginError(errorMsg)
       }
     }
   }
@@ -57,17 +59,17 @@ function Authentication({setIsUser}) {
 
   return (
     <>
-      <div className="bg-white shadow-md rounded px-8 w-1/2 pb-6 pt-4 mt-6 mx-auto flex flex-col justify-center items-center">
+      <div className="bg-white shadow-md rounded px-8 w-1/3 pb-6 pt-4 mt-6 mx-auto flex flex-col justify-center items-center">
         <form className="flex flex-col justify-center items-center">
-          <div className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl">Blog 3000</div>
-          <div className="mb-4">
+          <div className="m-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl">Blog 3000</div>
+          <div className="m-4">
             <input type='text' placeholder='Username' name='username' onChange={(e) => handleLoginInput(e.target.value, 'username')} className='shadow appearance-none text-center border rounded py-2 px-3 text-gray-700 leading-tight focus:placeholder-white' />
           </div>
-          <div className="mb-4">
+          <div className="m-4">
             <input type='password' placeholder='Password' onChange={(e) => handleLoginInput(e.target.value, 'password')} className='shadow appearance-none text-center border rounded py-2 px-3 text-gray-700 leading-tight focus:placeholder-white' />
           </div>
 
-          <button onClick={handleLogin} className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150">Login</button>
+          <button onClick={handleLogin} className="bg-blue-500 m-4 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150">Login</button>
         </form>
         <div className="text-red-500">{loginError}</div>
         <RegisterModal />

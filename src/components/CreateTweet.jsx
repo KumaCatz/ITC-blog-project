@@ -2,16 +2,16 @@ import { useContext } from "react";
 import { TweetsContext } from "../contexts/TweetsContext";
 
 function CreateTweet() {
-    const {handleSubmit, handleChange, disabled} = useContext(TweetsContext);
+    const {handleNewTweet, handleInput, disabled} = useContext(TweetsContext);
 
     return (
         <form name='tweet'
-        onSubmit={ handleSubmit }>
+        onSubmit={ handleNewTweet }>
             <div className='container'>
                 <textarea placeholder="Thinking about..."
                 name='body'
                 maxLength={ 140 }
-                onChange={ handleChange }
+                onChange={ handleInput }
                 className="shadow-lg block p-2.5 w-full text-base text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                 </textarea>
                 <input type='submit'

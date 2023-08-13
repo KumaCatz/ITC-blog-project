@@ -1,4 +1,4 @@
-function LoadingTweet(par) {
+function LoadingTweet() {
 
     return (
         <div className="text-xl text-center">Loading...</div>

@@ -4,10 +4,8 @@ import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import postData from "./postData";
 
-import '../css/RegisterModal.css'
-
 export default function RegisterModal() {
-  const {handleChange, setIsUser, setFormData} = useContext(TweetsContext);
+  const {handleInput, setIsUser, setFormData} = useContext(TweetsContext);
   const {setUserData, userData} = useContext(UserContext)
   const [showModal, setShowModal] = React.useState(false);
   const navigate = useNavigate()
@@ -42,7 +40,7 @@ export default function RegisterModal() {
   return (
     <>
       <button
-        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 mt-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
+        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 m-4 rounded shadow hover:shadow-lg outline-none focus:outline-none  ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -57,7 +55,7 @@ export default function RegisterModal() {
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
                     Welcome!
                   </h3>
@@ -66,12 +64,12 @@ export default function RegisterModal() {
                 {/*body*/}
                 <div className="relative p-6 flex-auto flex-col">
                   <div>
-                    <label>Username:</label>
-                    <input type='text' name='register-username' onChange={ handleChange } />
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                    <input type='text' name='register-username' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Username" onChange={ handleInput } />
                   </div>
                   <div>
-                    <label>Password:</label>
-                    <input type='text' name='register-password' onChange={ handleChange } />
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                    <input type='text' name='register-password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Password" onChange={ handleInput } />
                   </div>
                 </div>
                 {/*footer*/}

@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Authentication from './components/Authentication';
+import Authentication from './pages/Authentication';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import NoMatch from './pages/NoMatch';
@@ -9,22 +9,20 @@ import getData from './components/getData';
 import postData from './components/postData';
 import { TweetsContext } from './contexts/TweetsContext';
 import { UserContext } from './contexts/UserContext';
+import { tweetURL } from './data/constants';
 import date from './data/date';
-
-import './App.css';
-
 
 // nextStep: change userData to a reducer, so I can change in the login/register and profile pages without changing setUserData and exporting manually all the time
 
 function App() {
   const [isUser, setIsUser] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [tweetsList, setTweetsList] = useState([]);
   const [username, setUsername] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [numberOfTweets, setNumberOfTweets] = useState();
   const [pageNumber, setPageNumber] = useState(1)
-  const [hasMore, setHasMore] = useState(false)
+  const [isMore, setIsMore] = useState(false)
   const [formData, setFormData] = useState ({
     username: username || '',
     body: '',
@@ -36,32 +34,40 @@ function App() {
     password: '',
   })
 
-  const url = new URL('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet')
+  const url = new URL(tweetURL)
   url.searchParams.append('sortBy', 'date');
   url.searchParams.append('order', 'desc');
   url.searchParams.append('completed', false);
   url.searchParams.append('page', pageNumber);
   url.searchParams.append('limit', 10);
+  
+
+  async function firstTweet() {
+    const response = await fetch(url)
+    const data = await response.json()
+    if (data != '') {setNumberOfTweets(data[0].id)}
+  }
 
   useEffect(() => {
-    async function firstTweet() {
-      const response = await fetch(url)
-      const data = await response.json()
-      if (data != '') {setNumberOfTweets(data[0].id)}
-    }
     firstTweet()
   }, [])
 
-  useEffect(() => {
-    (async () => {
-      setLoading(true)
+  async function getMoreTweets() {
+    setIsLoading(true)
+    try {
       const data = await getData(url)
       setTweetsList(prevTweets => {
           return [...prevTweets, ...data]
         });
-      setLoading(false)
-      setHasMore(data.length > 0)
-    })()
+      setIsLoading(false)
+      setIsMore(data.length > 0)  
+    } catch(error) {
+      alert(error)
+    }
+  }
+
+  useEffect(() => {
+    getMoreTweets()
   }, [pageNumber])
 
   useEffect(() => {
@@ -82,20 +88,22 @@ function App() {
     })
   }, [userData])
 
-  const handleSubmit = async (e) => {
+  
+  const handleNewTweet = async (e) => {
     e.preventDefault();
-    const {name} = e.target;
+    if (formData.body == '') {return}
 
-    if (name == 'tweet') {
-      if (formData.body == '') {return}
+    setIsLoading(true);
+    const newTweet = await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet', formData);
+    setNumberOfTweets(newTweet.id);
+    setTweetsList([newTweet, ...tweetsList]);
+    setIsLoading(false);
+  }
 
-      setLoading(true);
-      const newTweet = await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/tweet', formData);
-      setNumberOfTweets(newTweet.id);
-      setTweetsList([newTweet, ...tweetsList]);
-      setLoading(false);
-    }
-    if (name == 'change-profile') {
+  const handleChangeProfile = async (e) => {
+    e.preventDefault();
+
+    if (e.target.name == 'change-profile') {
       setFormData((pre) => {
         return {
           ...pre,
@@ -106,7 +114,7 @@ function App() {
     }
   }
 
-  const handleChange = (e) => {
+  const handleInput = (e) => {
     const {name, value} = e.target;
 
     if (name == 'body') {
@@ -118,9 +126,9 @@ function App() {
         }
       })
       if (value.length == 140) {
-        setDisabled(true)
+        setIsDisabled(true)
       } else {
-        setDisabled(false)
+        setIsDisabled(false)
       }  
     }
     if (name == 'change-username') {
@@ -147,18 +155,19 @@ function App() {
   return (
     <UserContext.Provider value={{userData, setUserData}}>
       <TweetsContext.Provider value={{tweetsList,
-        disabled,
-        loading,
+        isDisabled,
+        isLoading,
         numberOfTweets,
         formData,
         pageNumber,
-        hasMore,
+        isMore,
         username,
         setIsUser,
         setFormData,
         setPageNumber,
-        handleSubmit,
-        handleChange}}>
+        handleInput,
+        handleNewTweet,
+        handleChangeProfile}}>
         {isUser ? <Navbar /> : null}
         <Routes>
           <Route index element={<Authentication
