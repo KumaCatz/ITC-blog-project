@@ -5,7 +5,8 @@ function NoMatch() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(localStorage.getItem('isUser') == false) {
+
+    if(localStorage.length == 0) {
       setTimeout(() => {
         navigate('/')
       }, 2200)  

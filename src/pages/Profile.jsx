@@ -5,11 +5,13 @@ import { UserContext } from "../contexts/UserContext";
 function Profile() {
     const {userData, setUserData} = useContext(UserContext)
     const {setFormData, formData} = useContext(TweetsContext);
+    const [saved, setSaved] = useState('')
     const [newPassord, setNewPassword] = useState('')
     const [newUsername, setNewUsername] = useState('')
 
     async function updateUserData(e) {
         e.preventDefault();
+        const userId = JSON.parse(localStorage.getItem('userData')).id
 
         const updatedUserData = {
             'username': newUsername,
@@ -18,7 +20,7 @@ function Profile() {
       
         const jsonString = JSON.stringify(updatedUserData);
     
-        const url = 'https://64b90fb679b7c9def6c0853b.mockapi.io/user/3';
+        const url = `https://64b90fb679b7c9def6c0853b.mockapi.io/user/${userId}`;
     
         const options = {
         method: 'PUT',
@@ -30,6 +32,7 @@ function Profile() {
         try {
             const response = await fetch(url, options)
             const data = await response.json()
+            console.log('fetch put', data)
             setUserData((pre) => {
                 return {
                     ...pre,
@@ -40,26 +43,18 @@ function Profile() {
             setFormData((pre) => {
                 return {
                     ...pre,
-                    username:data.username,
+                    username: data.username,
                 }
             })
-            console.log('fetch using put method:', data)
+            setSaved('changes saved! :)')
         } catch (e) {
-            console.log(e)
-        }
-        try {
-            const response = await fetch('https://64b90fb679b7c9def6c0853b.mockapi.io/user')
-            const data = await response.json()
-            console.log('fetch using get method:', data)
-        } catch (e) {
-            console.log(e)
+            alert(e)
         }
     }
 
-
     return (
         <div className='flex flex-col items-center space-y-4'>
-            <h1 className="mt-4 mb-2 text-xl">Change Profile</h1>
+            <h1 className="mt-4 mb-2 text-xl" onClick={() => console.log(localStorage)}>Change Profile</h1>
             <form name='change-profile' onSubmit={ updateUserData } className="flex flex-col space-y-4 w-1/5">
                 <div className="text-center font-medium">User Name</div>
                 <input type='text'
@@ -75,6 +70,7 @@ function Profile() {
                 className="text-center bg-white p-4 rounded-lg shadow-lg" />
                 <button type='submit' className="m-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w w-1/2">Save</button>
             </form>
+            <div>{saved}</div>
         </div>
     )
 }

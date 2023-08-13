@@ -15,7 +15,6 @@ function Authentication({setIsUser}) {
     e.preventDefault()
     const errorMsg = 'whoops, username/password error :('
     const users = await getData(endpoint.users)
-    console.log(users)
     if (users.length == 0) setLoginError(errorMsg)
 
     for (const user of users) {
@@ -23,14 +22,14 @@ function Authentication({setIsUser}) {
         setIsUser(true)
         localStorage.setItem('isUser', true);
         setUserData({
-          id: loginData.id,
-          username: loginData.username,
-          password: loginData.password,
+          id: user.id,
+          username: user.username,
+          password: user.password,
         })
         localStorage.setItem('userData', JSON.stringify({
-          id: loginData.id,
-          username: loginData.username,
-          password: loginData.password,
+          id: user.id,
+          username: user.username,
+          password: user.password,
         }))
         navigate('/home')
       } else {

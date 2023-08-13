@@ -76,6 +76,7 @@ function App() {
       setIsUser(isUser)
       const userData = JSON.parse(localStorage.getItem('userData'))
       setUserData(userData)
+      // console.log(localStorage)
     }
   }, [])
 

@@ -3,12 +3,14 @@ import { TweetsContext } from "../contexts/TweetsContext";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import postData from "./postData";
+import getData from "./getData";
 
 export default function RegisterModal() {
   const {handleInput, setIsUser, setFormData} = useContext(TweetsContext);
   const {setUserData, userData} = useContext(UserContext)
   const [showModal, setShowModal] = React.useState(false);
   const navigate = useNavigate()
+  const userURL = 'https://64b90fb679b7c9def6c0853b.mockapi.io/user'
 
   function exitModal() {
     setShowModal(false)
@@ -21,10 +23,9 @@ export default function RegisterModal() {
   
   const handleRegister = async (e) => {
     e.preventDefault();
-    const {name} = e.target;
 
     if (userData.password == '' || userData.username == '') {return}
-    await postData('https://64b90fb679b7c9def6c0853b.mockapi.io/user', userData);
+    await postData(userURL, userData);
 
     setFormData((pre) => {
       return {
@@ -32,8 +33,15 @@ export default function RegisterModal() {
         'username': userData.username
       }
     })
-    setShowModal(false)
     setIsUser(true)
+    localStorage.setItem('isUser', true);
+    const users = await getData(userURL)
+    localStorage.setItem('userData', JSON.stringify({
+      id: users.length,
+      username: userData.username,
+      password: userData.password,
+    }))
+    setShowModal(false)
     navigate('/home')
   }
 
@@ -69,7 +77,7 @@ export default function RegisterModal() {
                   </div>
                   <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-                    <input type='text' name='register-password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Password" onChange={ handleInput } />
+                    <input type='password' name='register-password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Password" onChange={ handleInput } />
                   </div>
                 </div>
                 {/*footer*/}
